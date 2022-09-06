@@ -1,0 +1,22 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "args": [
+               "-w", "result/weight_final.pth", 
+               "-i", "./dataset/analog-meter/istockphoto-105940980-640_adpp_is.mp4",
+               "--input_size", "224", "224",
+               "--model_name", "alexnet",
+            ],
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "demo-pytorch.py",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        }
+    ]
+}
