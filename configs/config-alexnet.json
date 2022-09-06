@@ -1,0 +1,22 @@
+{
+  "epochs": 200,
+  "batch_size": 32,
+  "image_size": [224,224],
+  "workers": 4,
+  "epochs_save": -1,
+  "result_path": "./result",
+  "use_tqdm": true,
+  "use_tensorboard": false,
+  "file_name_label": "",
+  "device": "cuda:0",
+  "training_mode": "full",
+  "learning_rate": [ 0.001, 0.0005, 0.0001 ],
+  "criteria": 0.05,
+  "loss_function": "MSELoss",
+  "optimizer": "Adam",
+  "data_root": "./dataset/analog-meter",
+  "save_onnx": false,
+  "use_pytorch_pretrained": false,
+  "load_weights": "",
+  "model_name": "alexnet"
+}
