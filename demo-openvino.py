@@ -1,4 +1,4 @@
-from openvino.inference_engine import IECore
+from openvino.runtime import Core
 import logging 
 import sys
 import cv2
@@ -24,18 +24,12 @@ def build_argparser():
 def main():
     args = build_argparser().parse_args()
 
-    ie = IECore()
+    core = Core()
 
-    log.info('Read Network: {}'.format(args.model))
-    net = ie.read_network(model=args.model)
-
-    input_blob = next(iter(net.input_info))
-    out_blob = next(iter(net.outputs))
-
-    log.info('Load Network: Device = {}'.format(args.device))
-    exec_net = ie.load_network(network=net, device_name=args.device)
-
-    input_shape = net.input_info[input_blob].input_data.shape
+    log.info('Read and Load Network: Model = {} Device = {}'.format(args.model, args.device))
+    model = core.compile_model(args.model, device_name=args.device)
+    output_layer = model.output(0)
+    input_shape = model.input(0).shape
     log.info('Input shape: {}'.format(input_shape))
 
     cap = cv2.VideoCapture(args.input)
@@ -52,9 +46,8 @@ def main():
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         image = image.transpose((2, 0, 1)) 
         image = image.reshape(input_shape) 
-        res = exec_net.infer(inputs={input_blob: image})
-        res = res[out_blob][0][0]
-        value = (res+0.5)*2000
+        res = model([image])[output_layer]
+        value = (res[0][0]+0.5)*2000
         cv2.putText(frame, '{:4.0f}'.format(value), (0, 50), cv2.FONT_HERSHEY_PLAIN, 4, (255, 0, 0), 5, cv2.LINE_AA)
         cv2.imshow('Detection Results', frame)
         key = cv2.waitKey(1)

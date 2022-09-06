@@ -7,6 +7,6 @@ tqdm
 opencv-python
 matplotlib
 numpy
-openvino==2021.4.2
-openvino-dev[onnx]==2021.4.2
+openvino
+openvino-dev[onnx]
 
